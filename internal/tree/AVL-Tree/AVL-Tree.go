@@ -88,10 +88,10 @@ func CreateTree(root *Node, arr []int) *Node {
 	if root == nil {
 		root = root.Insert(0, arr[0])
 	}
-	fmt.Println(root)
+	//fmt.Println(root)
 	for i := 1; i < len(arr); i++ {
 		root = root.Insert(i, arr[i])
-		fmt.Println(arr[i], root)
+		//fmt.Println(arr[i], root)
 	}
 	return root
 }
@@ -175,7 +175,7 @@ func printSubTree(node *Node, space int) {
 		return
 	}
 	space += 2
-	fmt.Printf("%v\t   ---- Val %d, Key %d", node, node.Value, node.Key)
+	//fmt.Printf("%v\t   ---- Val %d, Key %d", node, node.Value, node.Key)
 	printSubTree(node.Right, space)
 	fmt.Println()
 	for i := 2; i < space; i++ {
@@ -201,4 +201,17 @@ func printSubTree2(node *Node, space int) {
 	fmt.Println(node.Value)
 
 	printSubTree2(node.Left, space)
+}
+
+func FindHeight(node *Node) int {
+	if node == nil {
+		return -1
+	}
+	lefth := FindHeight(node.Left)
+	righth := FindHeight(node.Right)
+	if lefth > righth {
+		return lefth + 1
+	} else {
+		return righth + 1
+	}
 }

@@ -7,9 +7,10 @@ import (
 )
 
 type Node struct {
-	Value int
-	Left  *Node
-	Right *Node
+	Value  int
+	Left   *Node
+	Right  *Node
+	Height int
 }
 
 // insert вставляет новый узел в бинарное дерево поиска
@@ -24,6 +25,7 @@ func Insert(root *Node, value int) *Node {
 	} else {
 		root.Value = value // Обновляем значение, если ключ уже существует
 	}
+	root.updateHeight()
 	return root
 }
 func CreateTree(root *Node, arr []int) *Node {
@@ -134,10 +136,41 @@ func printSubTree(node *Node, space int) {
 	printSubTree(node.Right, space)
 	fmt.Println()
 	for i := 2; i < space; i++ {
-		fmt.Print("   ")
+		fmt.Print("-")
 	}
 	fmt.Println(node.Value)
 	printSubTree(node.Left, space)
+}
+
+func (node *Node) GetHeight() int {
+	if node == nil {
+		return -1
+	}
+	return node.Height
+}
+func (node *Node) updateHeight() {
+	if node == nil {
+		return
+	}
+	if node.Left.GetHeight() > node.Right.GetHeight() {
+		node.Height = node.Left.GetHeight() + 1
+	} else {
+		node.Height = node.Right.GetHeight() + 1
+	}
+
+}
+
+func FindHeight(node *Node) int {
+	if node == nil {
+		return -1
+	}
+	lefth := FindHeight(node.Left)
+	righth := FindHeight(node.Right)
+	if lefth > righth {
+		return lefth + 1
+	} else {
+		return righth + 1
+	}
 }
 
 //TODO: Доделать Delete()
