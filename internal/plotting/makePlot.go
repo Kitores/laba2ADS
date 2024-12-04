@@ -23,23 +23,35 @@ func CreateLineChartByPlotter(arrX []float64, arrY []int, typeOfTree string) {
 	plt.X.Label.Text = "keys"
 	plt.Y.Label.Text = "height"
 
-	//
+	// height
 	points := make(plotter.XYs, len(arrX))
 	for i := range arrX {
 		points[i].X = arrX[i]
 		points[i].Y = float64(arrY[i])
 	}
-
+	// log2n for avl
 	log2nPoints := make(plotter.XYs, len(arrX))
 	for i := range arrX {
 		log2nPoints[i].X = arrX[i]
-		log2nPoints[i].Y = nLogn(arrX[i])
+		log2nPoints[i].Y = Log2n(arrX[i])
 	}
-
+	// logpPiN either for avl
 	logHIPoints := make(plotter.XYs, len(arrX))
 	for i := range arrX {
 		logHIPoints[i].X = arrX[i]
 		logHIPoints[i].Y = LogHI(arrX[i])
+	}
+	// (log2n + 1) * 2 for rbt
+	log2n1Points := make(plotter.XYs, len(arrX))
+	for i := range arrX {
+		log2n1Points[i].X = arrX[i]
+		log2n1Points[i].Y = Log2n_1(arrX[i])
+	}
+	// log2n * k for BST
+	log2nKPoints := make(plotter.XYs, len(arrX))
+	for i := range arrX {
+		log2nKPoints[i].X = arrX[i]
+		log2nKPoints[i].Y = Log2nK(arrX[i])
 	}
 
 	Plot, err := plotter.NewLine(points)
@@ -57,15 +69,36 @@ func CreateLineChartByPlotter(arrX []float64, arrY []int, typeOfTree string) {
 		panic(err)
 	}
 
+	log2n1Plot, err := plotter.NewLine(log2n1Points)
+	if err != nil {
+		panic(err)
+	}
+
+	log2nKPlot, err := plotter.NewLine(log2nKPoints)
+	if err != nil {
+		panic(err)
+	}
+
 	Plot.LineStyle.Color = color.RGBA{R: 0, G: 0, B: 255, A: 255}
 	log2nPlot.LineStyle.Color = color.RGBA{R: 255, G: 0, B: 0, A: 255}
 	logHIPlot.LineStyle.Color = color.RGBA{R: 255, G: 127, B: 80, A: 255}
+	log2n1Plot.LineStyle.Color = color.RGBA{R: 255, G: 0, B: 0, A: 255}
+	log2nKPlot.LineStyle.Color = color.RGBA{R: 255, G: 0, B: 0, A: 255}
 
-	plt.Add(Plot, log2nPlot, logHIPlot)
-
-	plt.Legend.Add("Dependency Key/Height", Plot)
-	plt.Legend.Add("log2n", log2nPlot)
-	plt.Legend.Add("logφ", logHIPlot)
+	if typeOfTree == "AVL" {
+		plt.Add(Plot, log2nPlot, logHIPlot)
+		plt.Legend.Add("Dependency Key/Height", Plot)
+		plt.Legend.Add("log2n", log2nPlot)
+		plt.Legend.Add("logφn", logHIPlot)
+	} else if typeOfTree == " RBT" {
+		plt.Add(Plot, log2nPlot)
+		plt.Legend.Add("Dependency Key/Height", Plot)
+		plt.Legend.Add("(log2n + 1) * 2", log2n1Plot)
+	} else {
+		plt.Add(Plot, log2nKPlot)
+		plt.Legend.Add("Dependency Key/Height", Plot)
+		plt.Legend.Add("log2n * k", log2nKPlot)
+	}
 
 	//plt.X.Tick.Marker = plot.DefaultTicks{}
 	//plt.Y.Tick.Marker = plot.DefaultTicks{}
@@ -76,7 +109,13 @@ func CreateLineChartByPlotter(arrX []float64, arrY []int, typeOfTree string) {
 		panic(err)
 	}
 }
-func nLogn(x float64) float64 {
+func Log2n_1(x float64) float64 {
+	return math.Log2(x+1) * 2
+}
+func Log2nK(x float64) float64 {
+	return math.Log2(x) * 1.9
+}
+func Log2n(x float64) float64 {
 	return math.Log2(x)
 }
 func LogHI(x float64) float64 {

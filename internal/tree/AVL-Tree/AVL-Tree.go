@@ -215,3 +215,15 @@ func FindHeight(node *Node) int {
 		return righth + 1
 	}
 }
+
+func Test(arr []int) {
+	var node *Node
+	//var root *Node
+	node = CreateTree(nil, arr)
+	//tree.Insert(3)
+
+	//tree.Delete(6)
+	PrintTree2(node)
+	InorderTraversal(node)
+	fmt.Println(FindHeight(node))
+}

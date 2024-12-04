@@ -11,9 +11,10 @@ func main() {
 	////arr := pkg.RandArray(100, 12)
 	////fmt.Println(arr)
 	//Red_Black_Tree.Test(arr)
+	//AVL_Tree.Test(arr)
 
 	//trees := []string{"BST", "AVL", "RBT"}
-	trees := []string{"RBT"}
+	trees := []string{"BST"}
 
 	for _, tree := range trees {
 		arrX, arrY := measurements.Calculate(tree, 12)

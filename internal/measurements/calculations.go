@@ -42,7 +42,7 @@ func BSTcalculate(arr []int) int {
 	root = BinarySearchTree.CreateTree(root, arr)
 	//BinarySearchTree.PrintTree(root)
 	//return root.GetHeight() + 1
-	return BinarySearchTree.FindHeight(root)
+	return BinarySearchTree.FindHeight(root) + 1
 }
 
 func AVLcalculate(arr []int) int {
@@ -50,8 +50,8 @@ func AVLcalculate(arr []int) int {
 	root = AVL_Tree.CreateTree(root, arr)
 	//AVL_Tree.PrintTree2(root)
 	//return root.GetHeight() + 1
-	fmt.Println(root.GetHeight(), " ", AVL_Tree.FindHeight(root))
-	return AVL_Tree.FindHeight(root)
+	//fmt.Println(root.GetHeight(), " ", AVL_Tree.FindHeight(root))
+	return AVL_Tree.FindHeight(root) + 1
 }
 
 func RBTcalculate(arr []int) int {
@@ -60,7 +60,7 @@ func RBTcalculate(arr []int) int {
 	//AVL_Tree.PrintTree2(root)
 	//return root.GetHeight() + 1
 	fmt.Println(Red_Black_Tree.FindHeight(tree.Root))
-	return Red_Black_Tree.FindHeight(tree.Root)
+	return Red_Black_Tree.FindHeight(tree.Root) + 1
 
 	//TODO:
 }
